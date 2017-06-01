@@ -35,6 +35,17 @@ ID                    NAME                OPEN
 gcloud projects create workshop-cmoulliard-redhat-com
 ```
 
+* Make project as default
+```
+gcloud config set project workshop-cmoulliard-redhat-com
+```
+
+* Change default location
+```
+gcloud compute project-info add-metadata \
+    --metadata google-compute-default-region=europe-west1,google-compute-default-zone=europe-west1-b
+```
+
 * Create project (automated)
 
 Script : https://medium.com/google-cloud/how-to-automate-project-creation-using-gcloud-4e71d9a70047
@@ -74,20 +85,49 @@ workshop-1-cmoulliardxredhatxc  workshop-1-cmoulliardxredhatxc  733040473908
 gcloud projects delete workshop-cmoulliard-redhat-com
 ```
 
+* Add role owner to the user 
+```
+gcloud projects add-iam-policy-binding workshop-cmoulliard-redhat-com --member='user:cmoulliard@redhat.com' --role='roles/owner'
+```
+
 * Add a Service Account
 
+To create a service account, run the following command:
+
 ```
-gcloud iam service-accounts list
+gcloud iam service-accounts create my-workshop-sa --display-name "my workshop service account"
 gcloud iam service-accounts keys create \
     ~/key.json \
     --iam-account <SA_ID>@<PROJECT_ID>.iam.gserviceaccount.com
-gcloud iam service-accounts keys create \
-    ~/key.json \
-    --iam-account my-sa-1@stellar-spark-169312.iam.gserviceaccount.com    
-```
 
 <PROJECT_ID> : "stellar-spark-169312"
 <SA_ID> : "my-sa-123"
+    
+gcloud iam service-accounts keys create ~/key.json --iam-account my-workshop-sa@workshop-cmoulliard-redhat-com.iam.gserviceaccount.com   
+```
+
+* Give role owner
+
+```
+gcloud iam service-accounts add-iam-policy-binding my-workshop-sa@workshop-cmoulliard-redhat-com.iam.gserviceaccount.com --role='roles/owner' --member='user:cmoulliard@redhat.com'
+gcloud projects add-iam-policy-binding workshop-cmoulliard-redhat-com --member='serviceAccount:my-workshop-sa@workshop-cmoulliard-redhat-com.iam.gserviceaccount.com' --role='roles/owner' 
+```
+
+
+* Enable Billing forthe project
+
+```
+gcloud alpha billing accounts projects link workshop-cmoulliard-redhat-com --account-id=002916-AD0F6B-54058C
+```
+
+* Enable Services
+```
+gcloud service-management enable cloudbilling.googleapis.com
+gcloud service-management enable cloudapis.googleapis.com
+gcloud service-management enable dns.googleapis.com
+gcloud service-management enable compute-component.googleapis.com
+#gcloud service-management enable container.googleapis.com 
+```
 
 * Create Cloud DNS Zone (e.g. nip name for fomain nip.io.)
 
@@ -114,13 +154,6 @@ nameServers:
 - ns-cloud-c4.googledomains.com.
 ```
 
-* Create a new Service Account with Project Owner role, and furnish a new JSON key
-* To enable Google Compute Engine API
-
-Open this link in your browser and clik on the link "Enable API"
-
-https://console.developers.google.com/apis/api/compute-component.googleapis.com/overview?project=stellar-spark-169312
-
 # Create VM using OpenShifter
 
 This script will start a docker process running `openshifter` to create a VM (RHEL-7) on GCP and install OpenShift Container Platform.
@@ -146,4 +179,11 @@ gcloud compute firewall-rules delete cluster01-allow-http --quiet
 gcloud compute firewall-rules delete cluster01-allow-https --quiet
 
 gcloud compute networks delete cluster01 --quiet
+
+OR
+
+gcloud compute disks delete cluster-wks-01-master-root --quiet
+gcloud compute disks delete cluster-wks-01-master-docker --quiet
+gcloud compute addresses delete cluster-wks-01-master --quiet
+gcloud compute networks delete cluster-wks-01 --quiet
 ```
