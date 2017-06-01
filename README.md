@@ -123,8 +123,8 @@ https://console.developers.google.com/apis/api/compute-component.googleapis.com/
 
 # Create VM using OpenShifter
 
-This scrupt will start a docker process running `openshifter` to create a VM on GCP. The config is defined within the 
-`cluster01.yml` file
+This script will start a docker process running `openshifter` to create a VM (RHEL-7) on GCP and install OpenShift Container Platform.
+The config is defined within the `cluster01.yml` file
 
 ```
 ./create-cluster.sh cluster01
