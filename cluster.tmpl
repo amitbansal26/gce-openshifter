@@ -1,3 +1,4 @@
+name: <NAME>
 provider: gce
 type: ocp
 release: v3.5
@@ -6,7 +7,7 @@ dns:
   zone: nip
 
 ssh:
-  key: openshift-key
+  key: <KEY>
 
 users:
   - username: admin
@@ -29,7 +30,7 @@ nodes:
     size: 10
 
 gce:
-  account: demo-384301dab612.json
+  account: <GCP_JSON>
   region: europe-west1
   zone: europe-west1-b
-  project: stellar-spark-169312
+  project: <PROJECT>
