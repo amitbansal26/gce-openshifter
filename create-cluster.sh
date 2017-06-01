@@ -2,5 +2,5 @@
 
 file=${1:-cluster01}
 
-current=$(pwd)
+export current=$(pwd)
 docker run -ti -v $(pwd):/root/data docker.io/osevg/openshifter:15 create $file
