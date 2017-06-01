@@ -13,7 +13,7 @@ ZONE="europe-west1-b"
 EMAIL=${2:-cmoulliard@redhat.com}
 SERVICEACCOUNT="my-sa-1"
 
-PROJECT_ID=$(echo "${PROJECT_PREFIX}-${EMAIL}" | sed 's/@/x/g' | sed 's/\./x/g' | cut -c 1-30)
+PROJECT_ID=$(echo "${PROJECT_PREFIX}-${EMAIL}" | sed 's/@/-/g' | sed 's/\./-/g' | cut -c 1-30)
 
 # echo "Update gcloud client"
 # gcloud components update
