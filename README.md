@@ -36,7 +36,7 @@ Script : https://medium.com/google-cloud/how-to-automate-project-creation-using-
 ```
 curl -O https://raw.githubusercontent.com/GoogleCloudPlatform/training-data-analyst/master/blogs/gcloudprojects/create_projects.sh
 chmod +x create_projects.sh
-./create_projects.sh 002916-AD0F6B-54058C workshop-1 cmoulliard@redhat.com
+./create_projects.sh 002916-AD0F6B-54058C workshop cmoulliard@redhat.com
 
 Creating project workshop-1-cmoulliardxredhatxc for cmoulliard@redhat.com ...
 Create in progress for [https://cloudresourcemanager.googleapis.com/v1/projects/workshop-1-cmoulliardxredhatxc].
@@ -62,18 +62,16 @@ stellar-spark-169312            demo                            182007403298
 workshop-1-cmoulliardxredhatxc  workshop-1-cmoulliardxredhatxc  733040473908
 ```
 
-* Add billing
-
-Link the newly created project with your billing id, so that the bills come to you:
+* Create Project (manual)
 
 ```
-gcloud alpha billing accounts projects link workshop-1-cmoulliardxredhatxc --account-id=002916-AD0F6B-54058C
+gcloud projects create workshop-cmoulliard-redhat-com
 ```
 
-* Delete projects
+* Delete project
 
 ```
-./delete_projects.sh <project-prefix> cmoulliard@redhat.com"
+gcloud projects delete workshop-cmoulliard-redhat-com
 ```
 
 * Add a Service Account
