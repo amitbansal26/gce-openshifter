@@ -29,7 +29,13 @@ ID                    NAME                OPEN
 002916-AD0F6B-54058C  My Billing Account  True
 ```
 
-* Create project 
+* Create Project (manual)
+
+```
+gcloud projects create workshop-cmoulliard-redhat-com
+```
+
+* Create project (automated)
 
 Script : https://medium.com/google-cloud/how-to-automate-project-creation-using-gcloud-4e71d9a70047
 
@@ -60,12 +66,6 @@ gcloud projects list
 PROJECT_ID                      NAME                            PROJECT_NUMBER
 stellar-spark-169312            demo                            182007403298
 workshop-1-cmoulliardxredhatxc  workshop-1-cmoulliardxredhatxc  733040473908
-```
-
-* Create Project (manual)
-
-```
-gcloud projects create workshop-cmoulliard-redhat-com
 ```
 
 * Delete project
