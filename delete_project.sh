@@ -2,7 +2,7 @@
 
 if [ "$#" -lt 2 ]; then
    echo "Usage:  ./delete_projects.sh project-prefix"
-   echo "   eg:  ./delete_projects.sh learnml-20170106"
+   echo "   eg:  ./delete_projects.sh workshop-jbcnconf-cmoulliardxr"
    exit
 fi
 
