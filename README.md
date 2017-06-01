@@ -121,8 +121,20 @@ Open this link in your browser and clik on the link "Enable API"
 
 https://console.developers.google.com/apis/api/compute-component.googleapis.com/overview?project=stellar-spark-169312
 
-# To clean some GCP resources not deleted
+# Create VM using OpenShifter
 
+This scrupt will start a docker process running `openshifter` to create a VM on GCP. The config is defined within the 
+`cluster01.yml` file
+
+```
+./create-cluster.sh cluster01
+```
+
+# Tricks
+
+## To clean some GCP resources not deleted
+
+```
 gcloud compute disks delete cluster01-master-docker --quiet
 gcloud compute addresses delete cluster01-master --quiet
 
@@ -134,7 +146,4 @@ gcloud compute firewall-rules delete cluster01-allow-http --quiet
 gcloud compute firewall-rules delete cluster01-allow-https --quiet
 
 gcloud compute networks delete cluster01 --quiet
-
-# Create VM
-
-./create-cluster.sh cluster01
+```
