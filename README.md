@@ -175,6 +175,7 @@ gcloud compute firewall-rules delete firewall-internal --quiet
 gcloud compute firewall-rules delete firewall-master --quiet
 gcloud compute firewall-rules delete firewall-all --quiet
 gcloud compute firewall-rules delete firewall-infra --quiet
+
 gcloud compute firewall-rules delete cluster01-allow-http --quiet
 gcloud compute firewall-rules delete cluster01-allow-https --quiet
 
