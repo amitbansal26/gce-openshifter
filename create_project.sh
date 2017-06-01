@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Region:
-# Zone :
+# set -x
+# trap read debug
 
 if [ "$#" -lt 3 ]; then
    echo "Usage:  ./create_project.sh billingid project_id"
