@@ -24,7 +24,7 @@ users:
 nodes:
   count: 0
   infra: false
-  type: n1-standard-1 # See a list of machine types: https://cloud.google.com/compute/docs/machine-types
+  type: n1-standard-1
   disk:
     size: 10
 

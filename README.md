@@ -1,26 +1,5 @@
 # Create GCP Vm & install OpenShift
 
-# Build locally OpenShifter, populate the templates & install
-
-```
-go get github.com/osevg/openshifter
-git checkout wip-fm9
-
-go get github.com/Sirupsen/logrus
-go get gopkg.in/yaml.v2
-go get github.com/spf13/cobra
-go get golang.org/x/crypto/ssh
-go get github.com/mitchellh/gox
-go get github.com/inconshreveable/mousetrap
-go get github.com/jteeuwen/go-bindata/...
-go get github.com/pkg/sftp
-
-go generate
-go install 
-```
-
-# Create a Google Cloud Platform Project
-
 * Install Google Cloud SDK
 
 Download doc [SDK](https://cloud.google.com/sdk/downloads) 
@@ -94,10 +73,10 @@ gcloud alpha billing accounts projects link workshop-1-cmoulliardxredhatxc --acc
 * Delete projects
 
 ```
-
+./delete_projects.sh <project-prefix> cmoulliard@redhat.com"
 ```
 
-* Add a serviceaccount
+* Add a Service Account
 
 ```
 gcloud iam service-accounts list
