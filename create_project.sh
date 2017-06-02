@@ -1,16 +1,16 @@
 #!/bin/bash
 
 if [ "$#" -ne 2 ]; then
-   echo "Usage:  ./create_project.sh project_id email"
+   echo "Usage:  ./create_project.sh <PROJECT_ID> <EMAIL> <REGION> <ZONE>"
    echo "   eg:  ./create_project.sh workshop-jbcnconf cmoulliard@redhat.com"
    exit
 fi
 
 ACCOUNT_ID=$(gcloud alpha billing accounts list | awk 'FNR == 2 {print $1}')
 PROJECT_PREFIX=${1:-project}
-REGION="europe-west1"
-ZONE="europe-west1-b"
 EMAIL=${2:-cmoulliard@redhat.com}
+REGION=${3:-europe-west1}
+ZONE=${4:-europe-west1-b}
 SERVICEACCOUNT="my-sa-1"
 
 PROJECT_ID=$(echo "${PROJECT_PREFIX}-${EMAIL}" | sed 's/@/-/g' | sed 's/\./-/g' | cut -c 1-30)

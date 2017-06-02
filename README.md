@@ -47,64 +47,104 @@ ID                    NAME                OPEN
 * Create Project
 
 ```
+gcloud projects create <PROJECT_ID>
+where <PROJECT_ID> is defined according to a prefix + your email address without `. or @` symbols
+
+E.g.
 gcloud projects create workshop-cmoulliard-redhat-com
 ```
 
-* Make project as default
-```
-gcloud config set project workshop-cmoulliard-redhat-com
-```
-
-* Change default location
-```
-gcloud compute project-info add-metadata \
-    --metadata google-compute-default-region=europe-west1,google-compute-default-zone=europe-west1-b
-```
-
 * Add role owner to the user 
+
+As your user/email linked to your GCP account will be used to manage the different projects, we recommend to assign it to the project created with the role `owner` using 
+a policy binding. With such a role, you will be authorized to manage all the resources using the UI 
+
 ```
+gcloud projects add-iam-policy-binding <PROJECT_ID> --member='user:<EMAIL>' --role='roles/owner'
+E.g.
 gcloud projects add-iam-policy-binding workshop-cmoulliard-redhat-com --member='user:cmoulliard@redhat.com' --role='roles/owner'
 ```
 
-* Add a Service Account
+* Make project as default
 
-To create a service account, run the following command:
-
+If you have already created different Google Cloud Platform projects, then it is required to tell to GCP that the newly project created is the default now
 ```
-gcloud iam service-accounts create my-workshop-sa --display-name "my workshop service account"
-gcloud iam service-accounts keys create \
-    ~/key.json \
-    --iam-account <SA_ID>@<PROJECT_ID>.iam.gserviceaccount.com
+gcloud config set project <PROJECT_ID>
 
-<PROJECT_ID> : "stellar-spark-169312"
-<SA_ID> : "my-sa-123"
-    
-gcloud iam service-accounts keys create ~/key.json --iam-account my-workshop-sa@workshop-cmoulliard-redhat-com.iam.gserviceaccount.com   
-```
-
-* Give role owner
-
-```
-gcloud iam service-accounts add-iam-policy-binding my-workshop-sa@workshop-cmoulliard-redhat-com.iam.gserviceaccount.com --role='roles/owner' --member='user:cmoulliard@redhat.com'
-gcloud projects add-iam-policy-binding workshop-cmoulliard-redhat-com --member='serviceAccount:my-workshop-sa@workshop-cmoulliard-redhat-com.iam.gserviceaccount.com' --role='roles/owner' 
+E.g.
+gcloud config set project workshop-cmoulliard-redhat-com
 ```
 
 * Enable Billing for the project
 
+In order to create the resources and access to the Google APIs, we will link the project created to our billing id
+
 ```
-gcloud alpha billing accounts projects link workshop-cmoulliard-redhat-com --account-id=002916-AD0F6B-54058C
+gcloud alpha billing accounts projects link <PROJECT_ID> --account-id=<BILLING_ID>
+E.g.
+gcloud alpha billing accounts projects link workshop-cmoulliard-redhat-com --account-id=XXXXX-YYYYY-ZZZZZ
 ```
 
 * Enable Services
+
+Enable the following services to allow gcloud to create the VMS, networks, disks, ...
+
 ```
 gcloud service-management enable cloudbilling.googleapis.com
 gcloud service-management enable cloudapis.googleapis.com
 gcloud service-management enable dns.googleapis.com
 gcloud service-management enable compute-component.googleapis.com
-#gcloud service-management enable container.googleapis.com 
 ```
 
-* Create Cloud DNS Zone (e.g. nip name for fomain nip.io.)
+* Change default location
+
+Depending where you are based or running the VMS, it could be required that you would like to change the [region](https://cloud.google.com/compute/docs/regions-zones/regions-zones) and zone of the data center to be used
+
+```
+gcloud compute project-info add-metadata \
+    --metadata google-compute-default-region=<REGION>,google-compute-default-zone=<ZONE>
+    
+E.g.    
+gcloud compute project-info add-metadata \
+    --metadata google-compute-default-region=europe-west1,google-compute-default-zone=europe-west1-b
+```
+
+* Add a Service Account
+
+The next step will consist to create a service account and generate keys that the platform will use with your gcloud client to authorize you to perform some operations according to the role that 
+you have.
+
+To create a service account and the keys run the following commands:
+
+```
+gcloud iam service-accounts create <SA_ID> --display-name "my workshop service account"
+where <SA_ID> is the name of the service account to be created "my-sa-123"
+E.g.
+gcloud iam service-accounts create my-workshop-sa --display-name "my workshop service account"
+
+
+gcloud iam service-accounts keys create <KEY_FILE> --iam-account <SA_ID>@<PROJECT_ID>.iam.gserviceaccount.com    
+E.g.
+gcloud iam service-accounts keys create ~/key.json --iam-account my-sa-123@workshop-cmoulliard-redhat-com.iam.gserviceaccount.com   
+```
+
+* Give role owner
+
+This step allows to give the role `owner` to the service account created and next to bind it using a IAM policy to the project to allow to manage using the gcloud client the creation of the resources
+
+```
+gcloud iam service-accounts add-iam-policy-binding <SA_ID>@<PROJECT_ID>.iam.gserviceaccount.com --role='roles/owner' --member='user:<EMAIL>'
+E.g.
+gcloud iam service-accounts add-iam-policy-binding my-workshop-sa@workshop-cmoulliard-redhat-com.iam.gserviceaccount.com --role='roles/owner' --member='user:cmoulliard@redhat.com'
+
+gcloud projects add-iam-policy-binding <PROJECT_ID> --member='serviceAccount:<SA_ID>@<PROJECT_ID>.iam.gserviceaccount.com' --role='roles/owner' 
+E.g.
+gcloud projects add-iam-policy-binding workshop-cmoulliard-redhat-com --member='serviceAccount:my-workshop-sa@workshop-cmoulliard-redhat-com.iam.gserviceaccount.com' --role='roles/owner' 
+```
+
+* Create Cloud DNS Zone (optional)
+
+This step is not required according to Marek Jelen. To be verified !
 
 ```
 gcloud config set project stellar-spark-169312
@@ -129,13 +169,67 @@ nameServers:
 - ns-cloud-c4.googledomains.com.
 ```
 
-# Create VM using OpenShifter
+# Create VM, install OpenShift using OpenShifter
 
-This script will start a docker process running `openshifter` to create a VM (RHEL-7) on GCP and install OpenShift Container Platform.
-The config is defined within the `cluster01.yml` file
+As the project, serviceAccount & Roles have been created we can now use the [OpenShifter](https://github.com/openshift-evangelists/openshifter) tool to create the VM (RHEL-7, CentOS), install OpenShift, Configure the users.
+Remark: Start locally a Docker daemon or configure your docker client to access a Docker daemon running on a machine. When you use minishift locally, you can issue this command to configure it `minishift docker-env`
+
+```
+docker run -ti -v $(pwd):/root/data docker.io/osevg/openshifter:15 create <FILE_NAME_WITHOUT_EXTENSION>
+where <FILE_NAME_WITHOUT_EXTENSION> corresponds to the file name of the yaml configuration to be used without `.extension`. IF your file is `cluster.yml`, then pass `cluster` as parameter
+E.g.
+docker run -ti -v $(pwd):/root/data docker.io/osevg/openshifter:15 create cluster
+```
+
+An example of the custer yaml config file to be used is included within this project [cluster.tmpl](cluster.tmpl)
+
+This tool uses the GoogleApi to communicate with the GCP platform in order to create a VM, get an IP address, setup the network, create disks and apply firewall rules.
+When the VM is ready, than ansible is used to provision the VM with OCP (E.g. 3.5, ...) and finally to create the users
+
+The tool proposes other commands as :
+
+* create = provision + install + setup
+* provision =create the infra
+* install = install OpenShift using Ansible on that infra
+* setup = post installation steps, e.g. create users
+* destroy
+
+## Automated steps
+
+### Create a GCP Project
+
+```
+./create_project.sh <PROJECT_ID> <EMAIL> <REGION> <ZONE>"
+E.g. 
+./create_project.sh workshop-jbcnconf cmoulliard@redhat.com"
+```
+
+### Delete a GCP Project
+
+```
+./delete_project.sh <PROJECT_ID>
+E.g.
+./delete_project.sh workshop-cmoulliard-redhat-com
+```
+
+### Create VM & install OpenShift
+
+The `create-cluster.sh script will start a docker process running `openshifter` to create a VM (RHEL-7) on GCP and install OpenShift Container Platform.
+The yaml config is defined within the `cluster01.yml` file
 
 ```
 ./create-cluster.sh cluster01
+````
+
+### Create several VMs
+
+This bash script uses the `cluster.tmpl` template file to populate x VMs and will use as parameter your json keys file (created for the service Account), the project where the VMs should be created
+, the number of occurences of VMs to be created and finally the SSH keys to be imported within the VM 
+
+```
+./create-clusters.sh <FILE_NAME_WITHOUT_EXTENSION> <INSTANCES> <GCP_JSON_FILE> <PROJECT_ID> <KEY_FILE>
+E.g. 
+./create-clusters.sh vm 10 demo-384301dab612.json stellar-spark-169312 openshift-key
 ```
 
 # Tricks
