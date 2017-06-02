@@ -1,15 +1,15 @@
 # Create GCP VMs & install OpenShift
 
-In order to create some RHEL or CentOS Vms on Google Cloud Platform and to install OpenShift OCP, it is required to create a [GCP account](https://console.cloud.google.com/freetrial),
+In order to create some RHEL or CentOS Virtual Machines (VMs) on Google Cloud Platform and to install OpenShift OCP, it is required to create a [GCP account](https://console.cloud.google.com/freetrial),
 next to create a Project which forms the basis for creating, enabling, and using all Cloud Platform services including managing APIs, enabling billing, adding and
 removing collaborators, and managing permissions for Cloud Platform resources.
 
-This document describes, using the Google SDK - gcloud client, how such a project can be created, as the service account& keys (OAuth2) which is required to communicate from your machine with the cloud platform
+This document describes, using the Google SDK - gcloud client, how such a project can be created, as the service account & keys (OAuth2) which is required to communicate from your machine with the cloud platform
 in order to manage the required resources; VMs, APIs, Networks, Firewall rules, ...
 
-The document how you can achieve this goal using bash shell script or manual instructions executed from a terminal.
+The document details how you can achieve this goal using bash shell script or manual instructions executed from a terminal.
 
-* Install Google Cloud SDK
+## Install Google Cloud SDK
 
 Download doc [SDK](https://cloud.google.com/sdk/downloads) 
 Enter the following at a command prompt:
@@ -30,9 +30,13 @@ gcloud components update
 gcloud components install alpha
 ```
 
-## Commands to be executed for manual creation of the project
+## Manual steps
+
+The following steps assume that the `gcloud` client has been installed, that it has been define is on your bin path and that you have initialize it using the command `gcloud init`.
 
 * Check your billing ID
+
+The billing id will be used to link the project with your billable account. This step is mandatory as the billing id will be used next to create 
 
 ```
 gcloud alpha billing accounts list
@@ -40,7 +44,7 @@ ID                    NAME                OPEN
 002916-AD0F6B-54058C  My Billing Account  True
 ```
 
-* Create Project (manual)
+* Create Project
 
 ```
 gcloud projects create workshop-cmoulliard-redhat-com
@@ -55,45 +59,6 @@ gcloud config set project workshop-cmoulliard-redhat-com
 ```
 gcloud compute project-info add-metadata \
     --metadata google-compute-default-region=europe-west1,google-compute-default-zone=europe-west1-b
-```
-
-* Create project (automated)
-
-Script : https://medium.com/google-cloud/how-to-automate-project-creation-using-gcloud-4e71d9a70047
-
-```
-curl -O https://raw.githubusercontent.com/GoogleCloudPlatform/training-data-analyst/master/blogs/gcloudprojects/create_projects.sh
-chmod +x create_projects.sh
-./create_projects.sh 002916-AD0F6B-54058C workshop cmoulliard@redhat.com
-
-Creating project workshop-1-cmoulliardxredhatxc for cmoulliard@redhat.com ...
-Create in progress for [https://cloudresourcemanager.googleapis.com/v1/projects/workshop-1-cmoulliardxredhatxc].
-Waiting for [operations/pc.8781693343462747897] to finish...done.
-Updated IAM policy for project [workshop-1-cmoulliardxredhatxc].
-bindings:
-- members:
-  - user:cmoullia@redhat.com
-  role: roles/editor
-- members:
-  - user:cmoullia@redhat.com
-  role: roles/owner
-etag: BwVQ4dJeMMg=
-version: 1
-billingAccountName: billingAccounts/002916-AD0F6B-54058C
-billingEnabled: true
-name: projects/workshop-1-cmoulliardxredhatxc/billingInfo
-projectId: workshop-1-cmoulliardxredhatxc
-
-gcloud projects list
-PROJECT_ID                      NAME                            PROJECT_NUMBER
-stellar-spark-169312            demo                            182007403298
-workshop-1-cmoulliardxredhatxc  workshop-1-cmoulliardxredhatxc  733040473908
-```
-
-* Delete project
-
-```
-gcloud projects delete workshop-cmoulliard-redhat-com
 ```
 
 * Add role owner to the user 
@@ -124,8 +89,7 @@ gcloud iam service-accounts add-iam-policy-binding my-workshop-sa@workshop-cmoul
 gcloud projects add-iam-policy-binding workshop-cmoulliard-redhat-com --member='serviceAccount:my-workshop-sa@workshop-cmoulliard-redhat-com.iam.gserviceaccount.com' --role='roles/owner' 
 ```
 
-
-* Enable Billing forthe project
+* Enable Billing for the project
 
 ```
 gcloud alpha billing accounts projects link workshop-cmoulliard-redhat-com --account-id=002916-AD0F6B-54058C
@@ -176,7 +140,46 @@ The config is defined within the `cluster01.yml` file
 
 # Tricks
 
-## To clean some GCP resources not deleted
+## Delete a project
+
+```
+gcloud projects delete workshop-cmoulliard-redhat-com
+```
+
+## Alternative procedure to create a project and add emails
+
+Script : https://medium.com/google-cloud/how-to-automate-project-creation-using-gcloud-4e71d9a70047
+
+```
+curl -O https://raw.githubusercontent.com/GoogleCloudPlatform/training-data-analyst/master/blogs/gcloudprojects/create_projects.sh
+chmod +x create_projects.sh
+./create_projects.sh 002916-AD0F6B-54058C workshop cmoulliard@redhat.com
+
+Creating project workshop-1-cmoulliardxredhatxc for cmoulliard@redhat.com ...
+Create in progress for [https://cloudresourcemanager.googleapis.com/v1/projects/workshop-1-cmoulliardxredhatxc].
+Waiting for [operations/pc.8781693343462747897] to finish...done.
+Updated IAM policy for project [workshop-1-cmoulliardxredhatxc].
+bindings:
+- members:
+  - user:cmoullia@redhat.com
+  role: roles/editor
+- members:
+  - user:cmoullia@redhat.com
+  role: roles/owner
+etag: BwVQ4dJeMMg=
+version: 1
+billingAccountName: billingAccounts/002916-AD0F6B-54058C
+billingEnabled: true
+name: projects/workshop-1-cmoulliardxredhatxc/billingInfo
+projectId: workshop-1-cmoulliardxredhatxc
+
+gcloud projects list
+PROJECT_ID                      NAME                            PROJECT_NUMBER
+stellar-spark-169312            demo                            182007403298
+workshop-1-cmoulliardxredhatxc  workshop-1-cmoulliardxredhatxc  733040473908
+```
+
+## To clean GCP resources
 
 ```
 gcloud compute disks delete cluster01-master-docker --quiet
