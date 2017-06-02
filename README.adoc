@@ -206,14 +206,6 @@ E.g.
 ./create_project.sh workshop-jbcnconf cmoulliard@redhat.com"
 ```
 
-### Delete a GCP Project
-
-```
-./delete_project.sh <PROJECT_ID>
-E.g.
-./delete_project.sh workshop-cmoulliard-redhat-com
-```
-
 ### Create VM & install OpenShift
 
 The `create-cluster.sh script will start a docker process running `openshifter` to create a VM (RHEL-7) on GCP and install OpenShift Container Platform.
@@ -236,10 +228,18 @@ E.g.
 
 # Tricks
 
-## Delete a project
+## Delete a project (manual)
 
 ```
 gcloud projects delete workshop-cmoulliard-redhat-com
+```
+
+## Delete GCP Project
+
+```
+./delete_project.sh <PROJECT_ID>
+E.g.
+./delete_project.sh workshop-cmoulliard-redhat-com
 ```
 
 ## Alternative procedure to create a project and add emails
