@@ -1,5 +1,12 @@
 # Create GCP Vm & install OpenShift
 
+In order to create some RHEL or CentOS Vms on Google Cloud Platform and to install OpenShift OCP, it is required to create a [GCP account](https://console.cloud.google.com/freetrial),
+next to create a Project which forms the basis for creating, enabling, and using all Cloud Platform services including managing APIs, enabling billing, adding and
+removing collaborators, and managing permissions for Cloud Platform resources.
+
+This document describes, the Google SDK - gcloud client how the project can be created, as the service account which is required to communicate from your machine with the cloud platform
+in order to manage the required resources; VMs, APIs, Networks, Firewall rules, ...
+
 * Install Google Cloud SDK
 
 Download doc [SDK](https://cloud.google.com/sdk/downloads) 
@@ -20,6 +27,8 @@ gcloud init
 gcloud components update
 gcloud components install alpha
 ```
+
+## Commands to be executed for manual creation of the project
 
 * Check your billing ID
 
