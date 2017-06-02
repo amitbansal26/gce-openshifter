@@ -36,6 +36,8 @@ gcloud components install alpha
 
 The following steps assume that the `gcloud` client has been installed, that it has been define is on your bin path and that you have initialize it using the command `gcloud init`.
 
+### Create GCP PRoject
+
 * Check your billing ID
 
 The billing id will be used to link the project with your billable account. This step is mandatory as the billing id will be used next to create 
@@ -171,7 +173,7 @@ nameServers:
 - ns-cloud-c4.googledomains.com.
 ```
 
-# Create VM, install OpenShift using OpenShifter
+### Create VM, install OpenShift using OpenShifter
 
 As the project, serviceAccount & roles have been created we can now use the [OpenShifter](https://github.com/openshift-evangelists/openshifter) tool to create the VM (RHEL-7, CentOS), install OpenShift, Configure the users.
 Remark: Start locally a Docker daemon or configure your docker client to access a Docker daemon running on a machine. When you use minishift locally, you can issue this command to configure it `minishift docker-env`
