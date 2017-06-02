@@ -1,3 +1,5 @@
+:toc:
+
 # Create GCP VMs & install OpenShift
 
 In order to create some RHEL or CentOS Virtual Machines (VMs) on Google Cloud Platform and to install OpenShift OCP, it is required to create a [GCP account](https://console.cloud.google.com/freetrial),
