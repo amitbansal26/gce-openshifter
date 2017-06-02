@@ -219,7 +219,7 @@ The yaml config is defined within the `cluster01.yml` file
 
 ```
 ./create-cluster.sh cluster01
-````
+```
 
 ### Create several VMs
 
