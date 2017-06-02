@@ -2,7 +2,7 @@
 
 # Create GCP VMs & install OpenShift
 
-In order to create some RHEL or CentOS Virtual Machines (VMs) on Google Cloud Platform and to install OpenShift OCP, it is required to create a GCP account[https://console.cloud.google.com/freetrial],
+In order to create some RHEL or CentOS Virtual Machines (VMs) on Google Cloud Platform and to install OpenShift OCP, it is required to create a https://console.cloud.google.com/freetrial[GCP account],
 next to create a Project which forms the basis for creating, enabling, and using all Cloud Platform services including managing APIs, enabling billing, adding and
 removing collaborators, and managing permissions for Cloud Platform resources.
 
@@ -13,7 +13,7 @@ The document details how you can achieve this goal using bash shell script or ma
 
 ## Install Google Cloud SDK
 
-Download doc [SDK](https://cloud.google.com/sdk/downloads) 
+Download doc https://cloud.google.com/sdk/downloads[SDK]
 Enter the following at a command prompt:
 ```
 curl https://sdk.cloud.google.com | bash
@@ -102,7 +102,7 @@ gcloud service-management enable compute-component.googleapis.com
 
 * Change default location
 
-Depending where you are based or running the VMS, it could be required that you would like to change the [region](https://cloud.google.com/compute/docs/regions-zones/regions-zones) and zone of the data center to be used
+Depending where you are based or running the VMS, it could be required that you would like to change the https://cloud.google.com/compute/docs/regions-zones/regions-zones[region] and zone of the data center to be used
 
 ```
 gcloud compute project-info add-metadata \
@@ -175,7 +175,7 @@ nameServers:
 
 ### Create VM, install OpenShift using OpenShifter
 
-As the project, serviceAccount & roles have been created we can now use the [OpenShifter](https://github.com/openshift-evangelists/openshifter) tool to create the VM (RHEL-7, CentOS), install OpenShift, Configure the users.
+As the project, serviceAccount & roles have been created we can now use the https://github.com/openshift-evangelists/openshifter[OpenShifter] tool to create the VM (RHEL-7, CentOS), install OpenShift, Configure the users.
 Remark: Start locally a Docker daemon or configure your docker client to access a Docker daemon running on a machine. When you use minishift locally, you can issue this command to configure it `minishift docker-env`
 
 ```
@@ -185,7 +185,7 @@ E.g.
 docker run -ti -v $(pwd):/root/data docker.io/osevg/openshifter:15 create cluster
 ```
 
-An example of the cluster yaml config file to be used is included within this project [cluster.tmpl](cluster.tmpl)
+An example of the cluster yaml config file to be used is included within this project cluster.tmpl[cluster.tmpl]
 
 This tool uses the GoogleApi to communicate with the GCP platform in order to create a VM, get an IP address, setup the network, create disks and apply firewall rules.
 When the VM is ready, than ansible is used to provision the VM with OCP (E.g. 3.5, ...) and finally to create the users
