@@ -186,7 +186,7 @@ E.g.
 docker run -ti -v $(pwd):/root/data docker.io/osevg/openshifter:15 create cluster
 ```
 
-An example of the cluster yaml config file to be used is included within this project link::cluster.tmpl[cluster.tmpl]
+An example of the cluster yaml config file to be used is included within this project link:cluster.tmpl[cluster.tmpl]
 
 This tool uses the GoogleApi to communicate with the GCP platform in order to create a instance, get an IP address, setup the network, create disks and apply firewall rules.
 When the instance is ready, than ansible is used to provision the instance with OCP (E.g. 3.5, ...) and finally to create the users
