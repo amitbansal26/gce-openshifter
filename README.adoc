@@ -36,7 +36,7 @@ gcloud components install alpha
 
 ## Manual steps
 
-The following steps assume that the `gcloud` client has been installed, that it has been define is on your bin path and that you have initialize it using the command `gcloud init`.
+The following steps assume that the `gcloud` client has been installed, that it has been included on your bin path and that you have initialize it using the command `gcloud init`.
 
 ### Create GCP Project
 
