@@ -230,6 +230,12 @@ E.g.
 
 # Tricks
 
+## Check quota
+
+```
+gcloud compute project-info describe --project `PROJECT_ID>
+```
+
 ## Delete a project (manual)
 
 ```
