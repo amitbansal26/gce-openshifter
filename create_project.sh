@@ -7,7 +7,7 @@ if [ "$#" -ne 2 ]; then
 fi
 
 # FNR value should be changed if you have several accounts"
-ACCOUNT_ID=$(gcloud alpha billing accounts list | awk 'FNR == 3 {print $1}')
+ACCOUNT_ID=$(gcloud alpha billing accounts list | awk 'FNR == 2 {print $1}')
 PROJECT_PREFIX=${1:-project}
 EMAIL=${2:-cmoulliard@redhat.com}
 REGION=${3:-europe-west1}

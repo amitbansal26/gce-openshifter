@@ -2,6 +2,8 @@
 
 # Create Google Cloud Platform instances & install OpenShift
 
+## Introduction
+
 In order to create some RHEL or CentOS Virtual Machines (instances) on Google Cloud Platform and to install OpenShift OCP, it is required to create a https://console.cloud.google.com/freetrial[GCP account],
 next to create a Project which forms the basis for creating, enabling, and using all Cloud Platform services including managing APIs, enabling billing, adding and
 removing collaborators, and managing permissions for Cloud Platform resources.
