@@ -14,5 +14,5 @@ KEY=$5
 for ((i=1; i<=INSTANCES; i++)); do
   VM_NAME="vm-$i"
   sed -e "s/\<NAME\>/$VM_NAME/g" -e "s/\<PROJECT\>/$PROJECT/g" -e "s/\<KEY\>/$KEY/g" -e "s/\<GCP_JSON\>/$GCP_JSON/g" cluster.tmpl > $FILE-$i.yml
-  docker run -ti -v $(pwd):/root/data docker.io/osevg/openshifter:15 create $FILE-$i.yml
+  docker run -ti -v $(pwd):/root/data docker.io/osevg/openshifter:15 create $FILE-$i
 done
