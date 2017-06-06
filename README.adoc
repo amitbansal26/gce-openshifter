@@ -219,7 +219,7 @@ The yaml config is defined within the `cluster01.yml` file
 
 ### Create several instances
 
-This bash script uses the `cluster.tmpl` template file to populate x instances and will use as parameter your json keys file (created for the service Account), the project where the instances should be created
+This bash script uses the `cluster.tmpl` template file to populate x instances and will use as parameter your json key file (created for the service Account), the project where the instances should be created
 , the number of occurrences of instances to be created and finally the SSH keys to be imported within the instance
 
 Remark: In order to create several instances, please verify under the https://console.cloud.google.com/iam-admin/quotas[quotas] that you can assign more than 1 IP Address, that you have enough networks
