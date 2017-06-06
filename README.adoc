@@ -15,8 +15,8 @@ The document details how you can achieve this goal using bash shell script or ma
 
 ## Install Google Cloud SDK
 
-To install the Google SDK, execute the following instructions. You can find more info about the SDK from https://cloud.google.com/sdk/downloads[here]
-Enter the following at a command prompt:
+To install the Google SDK, execute the following commands within a terminal. You can find more info about the SDK from https://cloud.google.com/sdk/downloads[here]
+
 ```
 curl https://sdk.cloud.google.com | bash
 
