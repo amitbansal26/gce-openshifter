@@ -2,7 +2,7 @@
 
 if [ "$#" -ne 2 ]; then
    echo "Usage:  ./create_project.sh <PROJECT_ID> <EMAIL> <REGION> <ZONE>"
-   echo "   eg:  ./create_project.sh workshop-jbcnconf cmoulliard@redhat.com"
+   echo "   eg:  ./create_project.sh wks cmoulliard@redhat.com"
    exit
 fi
 
@@ -47,11 +47,11 @@ echo ">>> Add role owner to the user"
 gcloud projects add-iam-policy-binding $PROJECT_ID --member="user:$EMAIL" --role="roles/owner"
 
 echo ">>> Add a Service Account"
-gcloud iam service-accounts create $SERVICEACCOUNT --display-name "my-workshop-service-account"
-gcloud iam service-accounts keys create ~/$PROJECT_ID.json --iam-account $SERVICEACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
+gcloud iam service-accounts create $SERVICEACCOUNT --display-name "my-wks-service-account"
+gcloud iam service-accounts keys create $PROJECT_ID.json --iam-account $SERVICEACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
 
-echo ">>> Give role owner to the serviceaccoutn and bind it to the project"
-gcloud iam service-accounts add-iam-policy-binding $SERVICEACCOUNT@$PROJECT_ID.iam.gserviceaccount.com --role="roles/owner" --member="user:$USER"
+echo ">>> Give role owner to the serviceaccount and bind it to the project"
+gcloud iam service-accounts add-iam-policy-binding $SERVICEACCOUNT@$PROJECT_ID.iam.gserviceaccount.com --role="roles/owner" --member="user:$EMAIL"
 gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:$SERVICEACCOUNT@$PROJECT_ID.iam.gserviceaccount.com" --role="roles/owner"
 
 #echo ">>> Create Cloud DNS Zone (e.g. nip name for fomain nip.io.)"
