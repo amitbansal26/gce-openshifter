@@ -40,16 +40,6 @@ The following steps assume that the `gcloud` client has been installed, that it 
 
 ### Create GCP Project
 
-* Check your billing ID
-
-The billing id will be used to link the project with your billable account. This step is mandatory as the billing id will be used next to create 
-
-```
-gcloud alpha billing accounts list
-ID                    NAME                OPEN
-002916-AD0F6B-54058C  My Billing Account  True
-```
-
 * Create Project
 
 ```
@@ -79,6 +69,16 @@ gcloud config set project <PROJECT_ID>
 
 E.g.
 gcloud config set project workshop-cmoulliard-redhat-com
+```
+
+* Check your billing ID
+
+This step is mandatory as the billing id will be used to link the project that you will create with a billable account.
+
+```
+gcloud alpha billing accounts list
+ID                    NAME                OPEN
+002916-AD0F6B-54058C  My Billing Account  True
 ```
 
 * Enable Billing for the project
@@ -127,7 +127,6 @@ gcloud iam service-accounts create <SA_ID> --display-name "my workshop service a
 where <SA_ID> is the name of the service account to be created "my-sa-123"
 E.g.
 gcloud iam service-accounts create my-workshop-sa --display-name "my workshop service account"
-
 
 gcloud iam service-accounts keys create <KEY_FILE> --iam-account <SA_ID>@<PROJECT_ID>.iam.gserviceaccount.com    
 E.g.
