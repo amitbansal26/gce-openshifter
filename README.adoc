@@ -279,24 +279,10 @@ workshop-1-cmoulliardxredhatxc  workshop-1-cmoulliardxredhatxc  733040473908
 
 ## To clean GCP resources
 
+When you use the command `openshifter destroy file`, then the VM and the resources will be deleted. If this is not the case, you can use
+this script to delete the resources
+
 ```
-gcloud compute disks delete cluster01-master-docker --quiet
-gcloud compute addresses delete cluster01-master --quiet
-
-gcloud compute firewall-rules delete firewall-internal --quiet
-gcloud compute firewall-rules delete firewall-master --quiet
-gcloud compute firewall-rules delete firewall-all --quiet
-gcloud compute firewall-rules delete firewall-infra --quiet
-
-gcloud compute firewall-rules delete cluster01-allow-http --quiet
-gcloud compute firewall-rules delete cluster01-allow-https --quiet
-
-gcloud compute networks delete cluster01 --quiet
-
-OR
-
-gcloud compute disks delete cluster-wks-01-master-root --quiet
-gcloud compute disks delete cluster-wks-01-master-docker --quiet
-gcloud compute addresses delete cluster-wks-01-master --quiet
-gcloud compute networks delete cluster-wks-01 --quiet
+./delete-resources.sh <INSTANCES> where <INSTANCES> corresponds to the counter to be used to remove the resources of the instances created
+ previously `vm-COUNTER`
 ```

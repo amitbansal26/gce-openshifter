@@ -1,6 +1,8 @@
 #!/bin/bash
 
-for i in {1..10}; do
+INSTANCES=${1:-10}
+
+for ((i=1; i<=INSTANCES; i++)); do
   VM_NAME="vm-$i"
   gcloud compute disks delete $VM_NAME-master-docker --quiet
   gcloud compute disks delete $VM_NAME-master-root --quiet
