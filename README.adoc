@@ -1,13 +1,13 @@
 :toc:
 
-# Create GCP VMs & install OpenShift
+# Create Google Cloud Platform instances & install OpenShift
 
-In order to create some RHEL or CentOS Virtual Machines (VMs) on Google Cloud Platform and to install OpenShift OCP, it is required to create a https://console.cloud.google.com/freetrial[GCP account],
+In order to create some RHEL or CentOS Virtual Machines (instances) on Google Cloud Platform and to install OpenShift OCP, it is required to create a https://console.cloud.google.com/freetrial[GCP account],
 next to create a Project which forms the basis for creating, enabling, and using all Cloud Platform services including managing APIs, enabling billing, adding and
 removing collaborators, and managing permissions for Cloud Platform resources.
 
 This document describes, using the Google SDK - gcloud client, how such a project can be created, as the service account & keys (OAuth2) which is required to communicate from your machine with the cloud platform
-in order to manage the required resources; VMs, APIs, Networks, Firewall rules, ...
+in order to manage the required resources; instances, APIs, Networks, Firewall rules, ...
 
 The document details how you can achieve this goal using bash shell script or manual instructions executed from a terminal.
 
@@ -210,19 +210,19 @@ E.g.
 
 ### Create VM & install OpenShift
 
-The `create-cluster.sh script will start a docker process running `openshifter` to create a VM (RHEL-7) on GCP and install OpenShift Container Platform.
+The `create-cluster.sh script will start a docker process running `openshifter` to create a instance (RHEL-7) on GCP and install OpenShift Container Platform.
 The yaml config is defined within the `cluster01.yml` file
 
 ```
 ./create-cluster.sh cluster01
 ```
 
-### Create several VMs
+### Create several instances
 
-This bash script uses the `cluster.tmpl` template file to populate x VMs and will use as parameter your json keys file (created for the service Account), the project where the VMs should be created
-, the number of occurrences of VMs to be created and finally the SSH keys to be imported within the VM
+This bash script uses the `cluster.tmpl` template file to populate x instances and will use as parameter your json keys file (created for the service Account), the project where the instances should be created
+, the number of occurrences of instances to be created and finally the SSH keys to be imported within the instance
 
-Remark: In order to create several instances or VMS, please verify under the https://console.cloud.google.com/iam-admin/quotas[quotas] that you can assign more than 1 IP Address, that you have enough networks
+Remark: In order to create several instances, please verify under the https://console.cloud.google.com/iam-admin/quotas[quotas] that you can assign more than 1 IP Address, that you have enough networks
 and IP Addresses in use !
 
 image:quotas.png[]
