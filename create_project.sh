@@ -31,7 +31,6 @@ gcloud service-management enable cloudbilling.googleapis.com
 gcloud service-management enable cloudapis.googleapis.com
 gcloud service-management enable dns.googleapis.com
 gcloud service-management enable compute-component.googleapis.com
-#gcloud service-management enable container.googleapis.com
 
 echo ">>> Change default location"
 gcloud compute project-info add-metadata --metadata google-compute-default-region=$REGION,google-compute-default-zone=$ZONE

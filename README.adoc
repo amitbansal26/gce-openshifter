@@ -220,7 +220,12 @@ The yaml config is defined within the `cluster01.yml` file
 ### Create several VMs
 
 This bash script uses the `cluster.tmpl` template file to populate x VMs and will use as parameter your json keys file (created for the service Account), the project where the VMs should be created
-, the number of occurences of VMs to be created and finally the SSH keys to be imported within the VM 
+, the number of occurrences of VMs to be created and finally the SSH keys to be imported within the VM
+
+Remark: In order to create several instances or VMS, please verify under the https://console.cloud.google.com/iam-admin/quotas[quotas] that you can assign more than 1 IP Address, that you have enough networks
+and IP Addresses in use !
+
+image:quotas.png[]
 
 ```
 ./create-clusters.sh <FILE_NAME_WITHOUT_EXTENSION> <INSTANCES> <GCP_JSON_FILE> <PROJECT_ID> <KEY_FILE>
