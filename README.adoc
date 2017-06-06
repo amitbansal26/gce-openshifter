@@ -176,7 +176,7 @@ nameServers:
 
 ### Create VM, install OpenShift using OpenShifter
 
-As the project, serviceAccount & roles have been created we can now use the https://github.com/openshift-evangelists/openshifter[OpenShifter] tool to create the VM (RHEL-7, CentOS), install OpenShift, Configure the users.
+As the project, serviceAccount & roles have been created we can now use the https://github.com/openshift-evangelists/openshifter[OpenShifter] tool to create the instance (RHEL-7, CentOS), install OpenShift, Configure the users.
 Remark: Start locally a Docker daemon or configure your docker client to access a Docker daemon running on a machine. When you use minishift locally, you can issue this command to configure it `minishift docker-env`
 
 ```
@@ -188,8 +188,8 @@ docker run -ti -v $(pwd):/root/data docker.io/osevg/openshifter:15 create cluste
 
 An example of the cluster yaml config file to be used is included within this project cluster.tmpl[cluster.tmpl]
 
-This tool uses the GoogleApi to communicate with the GCP platform in order to create a VM, get an IP address, setup the network, create disks and apply firewall rules.
-When the VM is ready, than ansible is used to provision the VM with OCP (E.g. 3.5, ...) and finally to create the users
+This tool uses the GoogleApi to communicate with the GCP platform in order to create a instance, get an IP address, setup the network, create disks and apply firewall rules.
+When the instance is ready, than ansible is used to provision the instance with OCP (E.g. 3.5, ...) and finally to create the users
 
 The tool proposes other commands as :
 
@@ -209,7 +209,7 @@ E.g.
 ./create_project.sh workshop-jbcnconf cmoulliard@redhat.com"
 ```
 
-### Create VM & install OpenShift
+### Create instance & install OpenShift
 
 The `create-cluster.sh script will start a docker process running `openshifter` to create a instance (RHEL-7) on GCP and install OpenShift Container Platform.
 The yaml config is defined within the `cluster01.yml` file
@@ -291,7 +291,7 @@ workshop-1-cmoulliardxredhatxc  workshop-1-cmoulliardxredhatxc  733040473908
 
 ## To clean GCP resources
 
-When you use the command `openshifter destroy file`, then the VM and the resources will be deleted. If this is not the case, you can use
+When you use the command `openshifter destroy file`, then the instance and the resources will be deleted. If this is not the case, you can use
 this script to delete the resources
 
 ```
