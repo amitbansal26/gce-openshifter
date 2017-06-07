@@ -45,6 +45,3 @@ gcloud iam service-accounts keys create $PROJECT_ID.json --iam-account $SERVICEA
 echo ">>> Give role owner to the serviceaccount and bind it to the project"
 gcloud iam service-accounts add-iam-policy-binding $SERVICEACCOUNT@$PROJECT_ID.iam.gserviceaccount.com --role="roles/owner" --member="user:$EMAIL"
 gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:$SERVICEACCOUNT@$PROJECT_ID.iam.gserviceaccount.com" --role="roles/owner"
-
-#echo ">>> Create Cloud DNS Zone (e.g. nip name for fomain nip.io.)"
-#gcloud dns managed-zones create --dns-name="nip.io." --description="NIP.IO Domain" "nip"
