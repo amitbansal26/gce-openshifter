@@ -194,7 +194,7 @@ When the instance is ready, than ansible is used to provision the instance with 
 The tool proposes other commands as :
 
 * create = provision + install + setup
-* provision =create the infra
+* provision = create the infra
 * install = install OpenShift using Ansible on that infra
 * setup = post installation steps, e.g. create users
 * destroy
@@ -229,9 +229,11 @@ and IP Addresses in use !
 image:quotas.png[]
 
 ```
-./create-clusters.sh <FILE_NAME_WITHOUT_EXTENSION> <INSTANCES> <GCP_JSON_FILE> <PROJECT_ID> <KEY_FILE>
-E.g. 
-./create-clusters.sh vm 10 demo-384301dab612.json stellar-spark-169312 openshift-key
+./manage-clusters.sh <FILE_NAME_WITHOUT_EXTENSION> <INSTANCES> <GCP_JSON_FILE> <PROJECT_ID> <KEY_FILE> <CMD>
+where <CMD> command can be : create, provision, install, setup or destroy
+
+E.g.
+./manage-clusters.sh vm 10 demo-384301dab612.json stellar-spark-169312 openshift-key create
 ```
 
 # Tricks
